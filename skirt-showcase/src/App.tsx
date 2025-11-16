@@ -1,26 +1,23 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { PopupWindow } from './components/PopupWindow'
+import { SkirtSection } from './components/SkirtSection'
 import './App.css'
 
 type SkirtType = 'crayon' | 'pleated' | 'trapeze' | 'wrap' | null
 
 const skirtDescriptions = {
   crayon: {
-    title: 'Crayon Skirt',
-    description: 'A classic pencil skirt with a fitted silhouette that follows the body\'s natural curves. Typically falls at or below the knee and features a straight, narrow cut.'
+    title: 'Crayon Skirt'
   },
   pleated: {
-    title: 'Pleated Skirt',
-    description: 'Features fabric that has been folded and pressed into sharp pleats. The pleats can be box pleats, knife pleats, or accordion pleats, creating elegant movement and volume.'
+    title: 'Pleated Skirt'
   },
   trapeze: {
-    title: 'Trapeze Skirt',
-    description: 'An A-line skirt that flares out from the waist, resembling the shape of a trapezoid. Offers a relaxed, comfortable fit while maintaining a flattering silhouette.'
+    title: 'Trapeze Skirt'
   },
   wrap: {
-    title: 'Wrap Skirt',
-    description: 'A skirt that wraps around the body and secures with ties, buttons, or snaps. Creates a V-shaped hemline and adjustable fit, offering versatility and style.'
+    title: 'Wrap Skirt'
   }
 }
 
@@ -123,9 +120,10 @@ function App() {
           onClose={() => setSelectedSkirt(null)}
           title={skirtDescriptions[selectedSkirt].title}
         >
-          <div className="popup-skirt-content">
-            <h2>{skirtDescriptions[selectedSkirt].title}</h2>
-            <p>{skirtDescriptions[selectedSkirt].description}</p>
+          <div className="popup-skirt-sections">
+            <SkirtSection skirtType={selectedSkirt} sectionNumber={1} />
+            <SkirtSection skirtType={selectedSkirt} sectionNumber={2} />
+            <SkirtSection skirtType={selectedSkirt} sectionNumber={3} />
           </div>
         </PopupWindow>
       )}

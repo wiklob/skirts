@@ -133,22 +133,10 @@
   text-align: center;
 }
 
-/* Popup Content Styling */
-.popup-skirt-content {
-  padding: 1rem 0;
-}
-
-.popup-skirt-content h2 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-}
-
-.popup-skirt-content p {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #555;
+/* Popup Sections Container */
+.popup-skirt-sections {
+  padding: 0;
+  margin: 0;
 }
 
 /* Responsive */
