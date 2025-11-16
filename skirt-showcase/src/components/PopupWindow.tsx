@@ -149,7 +149,20 @@ export const PopupWindow = ({ isOpen, onClose, title, children }: PopupWindowPro
         </div>
 
         {/* Content */}
-        <div className="popup-content">
+        <div
+          className="popup-content"
+          onWheel={(e) => {
+            // Prevent scroll from propagating to parent when at scroll boundaries
+            const element = e.currentTarget
+            const atTop = element.scrollTop === 0
+            const atBottom = element.scrollTop + element.clientHeight >= element.scrollHeight - 1
+
+            if ((atTop && e.deltaY < 0) || (atBottom && e.deltaY > 0)) {
+              e.preventDefault()
+            }
+            e.stopPropagation()
+          }}
+        >
           {children}
         </div>
 

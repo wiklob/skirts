@@ -4,11 +4,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  pointer-events: none;
 }
 
 .popup-window {
@@ -20,6 +17,10 @@
   flex-direction: column;
   overflow: hidden;
   user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: auto;
 }
 
 .popup-titlebar {
@@ -68,6 +69,10 @@
   overflow-x: hidden;
   padding: 0;
   background: white;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* Resize Handles */

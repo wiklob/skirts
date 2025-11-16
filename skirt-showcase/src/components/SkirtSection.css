@@ -1,56 +1,66 @@
 .skirt-section {
   position: relative;
-  min-height: 100vh;
-  padding: 4rem 0;
+  min-height: min-content;
   border-bottom: 1px solid #e0e0e0;
+  padding: 4rem 2rem;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .skirt-section:last-child {
   border-bottom: none;
 }
 
-.section-content {
-  display: flex;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-}
-
-.text-column {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.text-column p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #333;
-  max-width: 600px;
-}
-
-.image-column {
-  flex: 0 0 400px;
-  position: relative;
-  height: 100%;
+.image-overlay {
+  position: sticky;
+  top: 2rem;
+  right: 2rem;
+  width: 200px;
+  pointer-events: none;
+  z-index: 10;
+  float: right;
+  margin-left: 2rem;
 }
 
 .sticky-image-container {
-  position: sticky;
-  top: 100px;
   width: 100%;
   height: fit-content;
 }
 
+.section-content {
+  position: relative;
+}
+
+.text-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-right: 250px;
+}
+
+.text-container p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+}
+
 .sticky-image-container img {
   width: 100%;
+  max-width: 150px;
+  max-height: 200px;
   height: auto;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  pointer-events: auto;
+}
+
+.sticky-image-container img:hover {
+  transform: scale(1.05);
 }
 
 /* Narrow screen: arrow toggle */
@@ -106,19 +116,23 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .section-content {
-    flex-direction: column;
+  .text-container {
+    padding-right: 0;
   }
 
-  .image-column {
+  .image-overlay {
     display: none;
   }
 
-  .text-column p {
+  .text-container p {
     font-size: 1rem;
   }
 
   .image-drawer {
     width: 280px;
+  }
+
+  .image-drawer img {
+    pointer-events: auto;
   }
 }

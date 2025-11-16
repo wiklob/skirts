@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { PopupWindow } from './components/PopupWindow'
 import { SkirtSection } from './components/SkirtSection'
+import { ImageZoomPopup } from './components/ImageZoomPopup'
 import './App.css'
 
 type SkirtType = 'crayon' | 'pleated' | 'trapeze' | 'wrap' | null
@@ -24,6 +25,7 @@ const skirtDescriptions = {
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -121,11 +123,31 @@ function App() {
           title={skirtDescriptions[selectedSkirt].title}
         >
           <div className="popup-skirt-sections">
-            <SkirtSection skirtType={selectedSkirt} sectionNumber={1} />
-            <SkirtSection skirtType={selectedSkirt} sectionNumber={2} />
-            <SkirtSection skirtType={selectedSkirt} sectionNumber={3} />
+            <SkirtSection
+              skirtType={selectedSkirt}
+              sectionNumber={1}
+              onImageClick={setZoomedImage}
+            />
+            <SkirtSection
+              skirtType={selectedSkirt}
+              sectionNumber={2}
+              onImageClick={setZoomedImage}
+            />
+            <SkirtSection
+              skirtType={selectedSkirt}
+              sectionNumber={3}
+              onImageClick={setZoomedImage}
+            />
           </div>
         </PopupWindow>
+      )}
+
+      {/* Image Zoom Popup */}
+      {zoomedImage && (
+        <ImageZoomPopup
+          imagePath={zoomedImage}
+          onClose={() => setZoomedImage(null)}
+        />
       )}
     </div>
   )
