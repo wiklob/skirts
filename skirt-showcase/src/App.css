@@ -76,6 +76,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 2rem;
+  height: 15rem;
 }
 
 .banner-gif {
@@ -86,7 +87,7 @@ body {
 }
 
 .banner-title {
-  font-size: 5rem;
+  font-size: 3rem;
   font-weight: 900;
   letter-spacing: 0.4em;
   color: black;
