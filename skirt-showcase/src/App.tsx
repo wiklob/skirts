@@ -7,21 +7,6 @@ import './App.css'
 
 type SkirtType = 'crayon' | 'pleated' | 'trapeze' | 'wrap' | null
 
-const skirtDescriptions = {
-  crayon: {
-    title: 'Crayon Skirt'
-  },
-  pleated: {
-    title: 'Pleated Skirt'
-  },
-  trapeze: {
-    title: 'Trapeze Skirt'
-  },
-  wrap: {
-    title: 'Wrap Skirt'
-  }
-}
-
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
