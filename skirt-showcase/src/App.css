@@ -30,9 +30,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: visible;
-  overflow-x: hidden;
+  overflow: hidden;
   will-change: filter, opacity;
+  pointer-events: none;
 }
 
 .skirt-gif {
