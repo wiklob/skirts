@@ -25,7 +25,7 @@ const skirtDescriptions = {
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
-  const [zoomedImage, setZoomedImage] = useState<string | null>(null)
+  const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string } | null>(null)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -120,23 +120,23 @@ function App() {
         <PopupWindow
           isOpen={!!selectedSkirt}
           onClose={() => setSelectedSkirt(null)}
-          title={skirtDescriptions[selectedSkirt].title}
+          title={`/skirt-database/${selectedSkirt}`}
         >
           <div className="popup-skirt-sections">
             <SkirtSection
               skirtType={selectedSkirt}
               sectionNumber={1}
-              onImageClick={setZoomedImage}
+              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
             />
             <SkirtSection
               skirtType={selectedSkirt}
               sectionNumber={2}
-              onImageClick={setZoomedImage}
+              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
             />
             <SkirtSection
               skirtType={selectedSkirt}
               sectionNumber={3}
-              onImageClick={setZoomedImage}
+              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
             />
           </div>
         </PopupWindow>
@@ -145,7 +145,8 @@ function App() {
       {/* Image Zoom Popup */}
       {zoomedImage && (
         <ImageZoomPopup
-          imagePath={zoomedImage}
+          imagePath={zoomedImage.path}
+          breadcrumb={zoomedImage.breadcrumb}
           onClose={() => setZoomedImage(null)}
         />
       )}

@@ -17,15 +17,17 @@
   position: sticky;
   top: 2rem;
   right: 2rem;
-  width: 200px;
+  width: 150px;
   pointer-events: none;
   z-index: 10;
   float: right;
   margin-left: 2rem;
+  background: white;
+  border-radius: 8px;
 }
 
 .sticky-image-container {
-  width: 100%;
+  width: 150px;
   height: fit-content;
 }
 

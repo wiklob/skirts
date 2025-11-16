@@ -4,7 +4,7 @@ import './SkirtSection.css'
 interface SkirtSectionProps {
   skirtType: string
   sectionNumber: number
-  onImageClick: (imagePath: string) => void
+  onImageClick: (imagePath: string, breadcrumb: string) => void
 }
 
 export const SkirtSection = ({ skirtType, sectionNumber, onImageClick }: SkirtSectionProps) => {
@@ -35,6 +35,7 @@ export const SkirtSection = ({ skirtType, sectionNumber, onImageClick }: SkirtSe
   }, [skirtType, sectionNumber])
 
   const imagePath = `/skirt-folders/sections/${skirtType}/${sectionNumber}.png`
+  const breadcrumb = `/skirt-database/${skirtType}/${sectionNumber}.png`
 
   return (
     <div className="skirt-section">
@@ -44,7 +45,7 @@ export const SkirtSection = ({ skirtType, sectionNumber, onImageClick }: SkirtSe
             <img
               src={imagePath}
               alt={`${skirtType} section ${sectionNumber}`}
-              onClick={() => onImageClick(imagePath)}
+              onClick={() => onImageClick(imagePath, breadcrumb)}
             />
           </div>
         </div>
@@ -70,7 +71,7 @@ export const SkirtSection = ({ skirtType, sectionNumber, onImageClick }: SkirtSe
               <img
                 src={imagePath}
                 alt={`${skirtType} section ${sectionNumber}`}
-                onClick={() => onImageClick(imagePath)}
+                onClick={() => onImageClick(imagePath, breadcrumb)}
               />
             </div>
           )}
