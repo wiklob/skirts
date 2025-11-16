@@ -1,19 +1,57 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { PopupWindow } from './components/PopupWindow'
 import './App.css'
+
+type SkirtType = 'crayon' | 'pleated' | 'trapeze' | 'wrap' | null
+
+const skirtDescriptions = {
+  crayon: {
+    title: 'Crayon Skirt',
+    description: 'A classic pencil skirt with a fitted silhouette that follows the body\'s natural curves. Typically falls at or below the knee and features a straight, narrow cut.'
+  },
+  pleated: {
+    title: 'Pleated Skirt',
+    description: 'Features fabric that has been folded and pressed into sharp pleats. The pleats can be box pleats, knife pleats, or accordion pleats, creating elegant movement and volume.'
+  },
+  trapeze: {
+    title: 'Trapeze Skirt',
+    description: 'An A-line skirt that flares out from the waist, resembling the shape of a trapezoid. Offers a relaxed, comfortable fit while maintaining a flattering silhouette.'
+  },
+  wrap: {
+    title: 'Wrap Skirt',
+    description: 'A skirt that wraps around the body and secures with ties, buttons, or snaps. Creates a V-shaped hemline and adjustable fit, offering versatility and style.'
+  }
+}
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   })
 
+  // Total number of frames
+  const TOTAL_FRAMES = 73
+
   // Transform scroll progress to animation states
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.3, 1.2])
-  const splitAmount = useTransform(scrollYProgress, [0.3, 0.7], [0, 150])
-  const opacity = useTransform(scrollYProgress, [0.6, 0.8], [1, 0])
+  const frameIndex = useTransform(scrollYProgress, [0, 0.6], [0, TOTAL_FRAMES - 1])
+  const scale = useTransform(scrollYProgress, [0, 0.6], [0.2, 2.5])
+  const opacity = useTransform(scrollYProgress, [0.6, 0.9], [1, 0])
+  const blur = useTransform(scrollYProgress, [0.6, 0.9], [0, 20])
   const contentOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1])
+
+  // State to hold current frame number
+  const [currentFrame, setCurrentFrame] = useState(0)
+
+  // Update frame based on scroll
+  useEffect(() => {
+    return frameIndex.on('change', (latest) => {
+      setCurrentFrame(Math.round(latest))
+    })
+  }, [frameIndex])
 
   return (
     <div className="app">
@@ -21,67 +59,19 @@ function App() {
       <div ref={containerRef} className="opening-section">
         <motion.div
           className="skirt-animation-container"
-          style={{ opacity }}
+          style={{
+            opacity,
+            filter: useTransform(blur, (b) => `blur(${b}px)`)
+          }}
         >
-          {/* Left half of skirt */}
-          <motion.div
-            className="skirt-half skirt-left"
+          <motion.img
+            src={`/frames/frame_${String(currentFrame).padStart(4, '0')}.png`}
+            alt="Skirt animation"
+            className="skirt-gif"
             style={{
-              scale,
-              x: useTransform(splitAmount, (v) => -v),
+              scale
             }}
-          >
-            <svg viewBox="0 0 100 200" className="skirt-svg">
-              <path
-                d="M 50 20 L 30 40 L 10 180 L 50 180 L 50 20 Z"
-                fill="#2c3e50"
-                className="pleated-skirt"
-              />
-              {/* Pleats */}
-              {[...Array(8)].map((_, i) => (
-                <line
-                  key={i}
-                  x1={50 - (i * 5)}
-                  y1={40 + (i * 3)}
-                  x2={50 - (i * 5.7)}
-                  y2={180}
-                  stroke="#1a252f"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-              ))}
-            </svg>
-          </motion.div>
-
-          {/* Right half of skirt */}
-          <motion.div
-            className="skirt-half skirt-right"
-            style={{
-              scale,
-              x: useTransform(splitAmount, (v) => v),
-            }}
-          >
-            <svg viewBox="0 0 100 200" className="skirt-svg">
-              <path
-                d="M 50 20 L 70 40 L 90 180 L 50 180 L 50 20 Z"
-                fill="#2c3e50"
-                className="pleated-skirt"
-              />
-              {/* Pleats */}
-              {[...Array(8)].map((_, i) => (
-                <line
-                  key={i}
-                  x1={50 + (i * 5)}
-                  y1={40 + (i * 3)}
-                  x2={50 + (i * 5.7)}
-                  y2={180}
-                  stroke="#1a252f"
-                  strokeWidth="1"
-                  opacity="0.5"
-                />
-              ))}
-            </svg>
-          </motion.div>
+          />
         </motion.div>
 
         {/* Content revealed behind */}
@@ -93,73 +83,52 @@ function App() {
         </motion.div>
       </div>
 
-      {/* Main Content Section */}
-      <section className="content-section">
-        <div className="skirt-categories">
-          <div className="category-grid">
-            <div className="category-item">
-              <div className="folder-icon">
-                <div className="folder-tab"></div>
-                <div className="folder-body"></div>
-              </div>
-              <span>crayon skirt</span>
-            </div>
-
-            <div className="category-item">
-              <div className="folder-icon">
-                <div className="folder-tab"></div>
-                <div className="folder-body"></div>
-              </div>
-              <span>pleated skirt</span>
-            </div>
-
-            <div className="category-item">
-              <div className="folder-icon">
-                <div className="folder-tab"></div>
-                <div className="folder-body"></div>
-              </div>
-              <span>trapeze skirt</span>
-            </div>
-
-            <div className="category-item">
-              <div className="folder-icon">
-                <div className="folder-tab"></div>
-                <div className="folder-body"></div>
-              </div>
-              <span>wrap skirt</span>
-            </div>
-          </div>
+      {/* Main Content Section with Sticky Banner */}
+      <div className="content-wrapper">
+        <div className="sticky-banner">
+          <h1 className="banner-title">SKIRTS DATABASE</h1>
         </div>
 
-        {/* Pleated Skirt Detail Section */}
-        <div className="skirt-detail">
-          <h2>pleated skirt</h2>
-          <div className="detail-content">
-            <div className="detail-text">
-              <p className="label">kręcący się napis wokół osi pionowej</p>
-              <div className="text-lines">
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
+        <section className="content-section">
+          <div className="skirt-categories">
+            <div className="category-grid">
+              <div className="category-item" onClick={() => setSelectedSkirt('crayon')}>
+                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <span>crayon skirt</span>
               </div>
-              <p className="label">tekst</p>
-              <div className="image-placeholder"></div>
-              <p className="label">zdjęcia</p>
-              <p className="small-text">jak klikniesz to wyświetla się opis</p>
-            </div>
-            <div className="timeline">
-              {[...Array(7)].map((_, i) => (
-                <div key={i} className="timeline-item">
-                  <div className="timeline-dot"></div>
-                  {i === 5 && <div className="timeline-arrow">→</div>}
-                </div>
-              ))}
+
+              <div className="category-item" onClick={() => setSelectedSkirt('pleated')}>
+                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <span>pleated skirt</span>
+              </div>
+
+              <div className="category-item" onClick={() => setSelectedSkirt('trapeze')}>
+                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <span>trapeze skirt</span>
+              </div>
+
+              <div className="category-item" onClick={() => setSelectedSkirt('wrap')}>
+                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <span>wrap skirt</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      {/* Popup Window */}
+      {selectedSkirt && (
+        <PopupWindow
+          isOpen={!!selectedSkirt}
+          onClose={() => setSelectedSkirt(null)}
+          title={skirtDescriptions[selectedSkirt].title}
+        >
+          <div className="popup-skirt-content">
+            <h2>{skirtDescriptions[selectedSkirt].title}</h2>
+            <p>{skirtDescriptions[selectedSkirt].description}</p>
+          </div>
+        </PopupWindow>
+      )}
     </div>
   )
 }
