@@ -5,7 +5,7 @@ import { SkirtSection } from './components/SkirtSection'
 import { ImageZoomPopup } from './components/ImageZoomPopup'
 import './App.css'
 
-type SkirtType = 'crayon' | 'pleated' | 'trapeze' | 'wrap' | null
+type SkirtType = 'pencil' | 'pleated' | 'trapeze' | 'wrap' | null
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -70,29 +70,30 @@ function App() {
       {/* Main Content Section with Sticky Banner */}
       <div className="content-wrapper">
         <div className="sticky-banner">
-          <h1 className="banner-title">SKIRTS DATABASE</h1>
+          <img src="/database_gif.gif" alt="Database" className="banner-gif" />
+          <h1 className="banner-title">SKIRT</h1>
         </div>
 
         <section className="content-section">
           <div className="skirt-categories">
             <div className="category-grid">
-              <div className="category-item" onClick={() => setSelectedSkirt('crayon')}>
-                <img src="/folder.png" alt="Folder" className="folder-icon" />
-                <span>crayon skirt</span>
+              <div className="category-item" onClick={() => setSelectedSkirt('pencil')}>
+                <img src="/folder_images/pencil_folder.png" alt="Pencil Skirt Folder" className="folder-icon" />
+                <span>pencil skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('pleated')}>
-                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <img src="/folder_images/pleated_folder.png" alt="Pleated Skirt Folder" className="folder-icon" />
                 <span>pleated skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('trapeze')}>
-                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <img src="/folder_images/trapeze_folder.png" alt="Trapeze Skirt Folder" className="folder-icon" />
                 <span>trapeze skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('wrap')}>
-                <img src="/folder.png" alt="Folder" className="folder-icon" />
+                <img src="/folder_images/wrap_folder.png" alt="Wrap Skirt Folder" className="folder-icon" />
                 <span>wrap skirt</span>
               </div>
             </div>
