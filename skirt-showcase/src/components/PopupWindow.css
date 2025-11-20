@@ -123,7 +123,7 @@
 /* Resize Handles */
 .popup-resize-handle {
   position: absolute;
-  z-index: 10;
+  z-index: 25;
 }
 
 .popup-resize-n {
@@ -200,4 +200,5 @@
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M36 14 Q36 36 14 36' stroke='%23000' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
   opacity: 0.6;
+  z-index: 30;
 }
