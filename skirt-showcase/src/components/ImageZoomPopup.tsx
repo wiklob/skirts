@@ -161,6 +161,9 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
         <div className="image-zoom-resize-handle image-zoom-resize-nw" onMouseDown={(e) => handleResizeStart(e, 'nw')} />
         <div className="image-zoom-resize-handle image-zoom-resize-se" onMouseDown={(e) => handleResizeStart(e, 'se')} />
         <div className="image-zoom-resize-handle image-zoom-resize-sw" onMouseDown={(e) => handleResizeStart(e, 'sw')} />
+
+        {/* Resize Grip Indicator */}
+        <div className="image-zoom-resize-grip" />
       </motion.div>
     </motion.div>
   )

@@ -175,6 +175,9 @@ export const PopupWindow = ({ isOpen, onClose, title, children }: PopupWindowPro
         <div className="popup-resize-handle popup-resize-nw" onMouseDown={(e) => handleResizeStart(e, 'nw')} />
         <div className="popup-resize-handle popup-resize-se" onMouseDown={(e) => handleResizeStart(e, 'se')} />
         <div className="popup-resize-handle popup-resize-sw" onMouseDown={(e) => handleResizeStart(e, 'sw')} />
+
+        {/* Resize Grip Indicator */}
+        <div className="popup-resize-grip" />
       </motion.div>
     </motion.div>
   )
