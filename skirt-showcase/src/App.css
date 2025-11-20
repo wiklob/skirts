@@ -132,7 +132,7 @@ body {
 /* Skirt Categories */
 .skirt-categories {
   max-width: 1200px;
-  margin: 0 auto 6rem;
+  margin: 0 auto 4rem;
 }
 
 .category-grid {
@@ -166,6 +166,52 @@ body {
   font-weight: 400;
   color: #2c3e50;
   text-align: center;
+}
+
+/* Designed By Section */
+.designed-by-section {
+  max-width: 1200px;
+  margin: 0 auto 6rem;
+  padding: 0 2rem;
+}
+
+.designed-by-line {
+  width: 100%;
+  height: 2px;
+  background-color: black;
+  margin-bottom: 2rem;
+}
+
+.designed-by-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.designed-by-title {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: black;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+}
+
+.designer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.designer-list li {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  color: black;
+  text-transform: capitalize;
 }
 
 /* Popup Sections Container */

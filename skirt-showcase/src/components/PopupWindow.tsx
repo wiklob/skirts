@@ -12,7 +12,7 @@ interface PopupWindowProps {
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw' | null
 
 export const PopupWindow = ({ isOpen, onClose, title, children }: PopupWindowProps) => {
-  const [size, setSize] = useState({ width: 600, height: 500 })
+  const [size, setSize] = useState({ width: 800, height: 650 })
   const [position, setPosition] = useState({ x: 100, y: 100 })
   const [isDragging, setIsDragging] = useState(false)
   const [isResizing, setIsResizing] = useState(false)

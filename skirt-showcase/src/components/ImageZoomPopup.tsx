@@ -9,7 +9,7 @@ interface ImageZoomPopupProps {
 }
 
 export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopupProps) => {
-  const [size, setSize] = useState({ width: 600, height: 500 })
+  const [size, setSize] = useState({ width: 800, height: 650 })
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isResizing, setIsResizing] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -20,10 +20,11 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
   const resizeDirection = useRef<string>('')
 
   useEffect(() => {
-    // Center on mount
+    // Center on mount with slight offset for cascade effect
+    const offset = 50
     setPosition({
-      x: (window.innerWidth - 600) / 2,
-      y: (window.innerHeight - 500) / 2
+      x: (window.innerWidth - 800) / 2 + offset,
+      y: (window.innerHeight - 650) / 2 + offset
     })
   }, [])
 

@@ -81,23 +81,32 @@ function App() {
             <div className="category-grid">
               <div className="category-item" onClick={() => setSelectedSkirt('pencil')}>
                 <img src="/folder_images/pencil_folder.png" alt="Pencil Skirt Folder" className="folder-icon" />
-                <span>pencil skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('pleated')}>
                 <img src="/folder_images/pleated_folder.png" alt="Pleated Skirt Folder" className="folder-icon" />
-                <span>pleated skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('trapeze')}>
                 <img src="/folder_images/trapeze_folder.png" alt="Trapeze Skirt Folder" className="folder-icon" />
-                <span>trapeze skirt</span>
               </div>
 
               <div className="category-item" onClick={() => setSelectedSkirt('wrap')}>
                 <img src="/folder_images/wrap_folder.png" alt="Wrap Skirt Folder" className="folder-icon" />
-                <span>wrap skirt</span>
               </div>
+            </div>
+          </div>
+
+          <div className="designed-by-section">
+            <div className="designed-by-line"></div>
+            <div className="designed-by-content">
+              <h2 className="designed-by-title">DESIGNED BY:</h2>
+              <ul className="designer-list">
+                <li>Alejandro</li>
+                <li>Alicia</li>
+                <li>Kosta</li>
+                <li>Marcel</li>
+              </ul>
             </div>
           </div>
         </section>
