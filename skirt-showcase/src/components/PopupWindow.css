@@ -75,6 +75,51 @@
   -ms-user-select: none;
 }
 
+/* Image Row Bar */
+.popup-image-bar {
+  position: relative;
+  width: 100%;
+  min-height: 132px;
+  background: white;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.popup-image-bar-scroll {
+  display: flex;
+  gap: 8px;
+  height: 100%;
+  padding: 18px 8px 8px 8px;
+  overflow-x: hidden;
+  align-items: center;
+}
+
+.popup-image-bar-item {
+  height: 116px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 4px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.popup-image-bar-item:hover {
+  transform: translateY(-10px);
+}
+
+.popup-image-bar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 132px;
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+}
+
 /* Resize Handles */
 .popup-resize-handle {
   position: absolute;

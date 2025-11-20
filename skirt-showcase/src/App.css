@@ -229,6 +229,35 @@ body {
   -ms-user-select: none;
 }
 
+/* Popup Banner */
+.popup-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  width: 100%;
+  padding: 2rem;
+  background: white;
+}
+
+.popup-banner-title {
+  font-family: 'Rubik 80s Fade', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: 0.4em;
+  color: black;
+  text-transform: uppercase;
+  margin: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.popup-banner-gif {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .revealed-content h1 {

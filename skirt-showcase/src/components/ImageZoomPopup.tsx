@@ -9,7 +9,7 @@ interface ImageZoomPopupProps {
 }
 
 export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopupProps) => {
-  const [size, setSize] = useState({ width: 800, height: 650 })
+  const [size, setSize] = useState({ width: 400, height: 500 })
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isResizing, setIsResizing] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -20,11 +20,18 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
   const resizeDirection = useRef<string>('')
 
   useEffect(() => {
-    // Center on mount with slight offset for cascade effect
-    const offset = 50
+    // Center with slight offset for cascade effect, ensuring it fits in viewport
+    const offsetX = -150
+    const offsetY = -30
+    const idealX = (window.innerWidth - 400) / 2 + offsetX
+    const idealY = (window.innerHeight - 500) / 2 + offsetY
+
+    const constrainedX = Math.max(0, Math.min(idealX, window.innerWidth - 400))
+    const constrainedY = Math.max(0, Math.min(idealY, window.innerHeight - 500))
+
     setPosition({
-      x: (window.innerWidth - 800) / 2 + offset,
-      y: (window.innerHeight - 650) / 2 + offset
+      x: constrainedX,
+      y: constrainedY
     })
   }, [])
 
@@ -74,6 +81,16 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
         newY = windowStartPos.current.y + deltaY
       }
 
+      // Constrain size to viewport
+      const maxWidth = window.innerWidth - newX
+      const maxHeight = window.innerHeight - newY
+      newWidth = Math.min(newWidth, maxWidth)
+      newHeight = Math.min(newHeight, maxHeight)
+
+      // Constrain position to viewport
+      newX = Math.max(0, Math.min(newX, window.innerWidth - newWidth))
+      newY = Math.max(0, Math.min(newY, window.innerHeight - newHeight))
+
       setSize({ width: newWidth, height: newHeight })
       setPosition({ x: newX, y: newY })
     }
@@ -98,9 +115,16 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
       const deltaX = e.clientX - dragStartPos.current.x
       const deltaY = e.clientY - dragStartPos.current.y
 
+      const newX = windowStartPos.current.x + deltaX
+      const newY = windowStartPos.current.y + deltaY
+
+      // Constrain to viewport
+      const constrainedX = Math.max(0, Math.min(newX, window.innerWidth - size.width))
+      const constrainedY = Math.max(0, Math.min(newY, window.innerHeight - size.height))
+
       setPosition({
-        x: windowStartPos.current.x + deltaX,
-        y: windowStartPos.current.y + deltaY
+        x: constrainedX,
+        y: constrainedY
       })
     }
 

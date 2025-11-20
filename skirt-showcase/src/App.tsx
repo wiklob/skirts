@@ -118,8 +118,16 @@ function App() {
           isOpen={!!selectedSkirt}
           onClose={() => setSelectedSkirt(null)}
           title={`/skirt-database/${selectedSkirt}`}
+          skirtType={selectedSkirt}
+          onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
         >
           <div className="popup-skirt-sections">
+            <div className="popup-banner">
+              <h1 className="popup-banner-title">
+                {selectedSkirt.toUpperCase()}
+              </h1>
+              <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
+            </div>
             <SkirtSection
               skirtType={selectedSkirt}
               sectionNumber={1}
