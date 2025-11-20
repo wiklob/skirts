@@ -70,8 +70,10 @@ function App() {
       {/* Main Content Section with Sticky Banner */}
       <div className="content-wrapper">
         <div className="sticky-banner">
-          <img src="/database_gif.gif" alt="Database" className="banner-gif" />
-          <h1 className="banner-title">SKIRT</h1>
+          <div className="banner-content">
+            <h1 className="banner-title">SKIRT</h1>
+            <img src="/database_gif.gif" alt="Database" className="banner-gif" />
+          </div>
         </div>
 
         <section className="content-section">

@@ -71,29 +71,42 @@ body {
   width: 100%;
   background: white;
   z-index: 100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  height: 15rem;
+  height: 13rem;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  width: 80%;
+  height: 60%;
+  max-width: 100%;
 }
 
 .banner-gif {
   height: 100%;
   width: auto;
+  max-width: 40%;
   object-fit: contain;
-  order: 2;
+  flex-shrink: 1;
 }
 
 .banner-title {
-  font-size: 3rem;
+  font-family: 'Rubik 80s Fade', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 6vw, 7vh);
   font-weight: 900;
   letter-spacing: 0.4em;
   color: black;
   text-transform: uppercase;
   margin: 0;
-  order: 1;
+  white-space: nowrap;
+  line-height: 1;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 /* Content Section */
