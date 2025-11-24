@@ -16,7 +16,7 @@ export const RestImages = ({ imageNumbers, skirtType, onImageClick }: RestImages
   return (
     <div className="rest-images-container">
       <div className="rest-images-grid">
-        {imageNumbers.map((imageRef, idx) => {
+        {imageNumbers.map((imageRef) => {
           let imagePath: string
           let breadcrumb: string
           let key: string
