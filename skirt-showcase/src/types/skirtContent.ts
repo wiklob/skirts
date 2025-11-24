@@ -1,10 +1,10 @@
 // Types for structured skirt content from RTF files
 
-export interface SkirtContent {
-  source: 'rtf' | 'legacy'
+export interface RTFSkirtContent {
+  source: 'rtf'
   sections: ContentSection[]
   imageMappings: ImageMapping
-  restImages: number[] // Images displayed centrally, not tied to paragraphs
+  restImages: (number | string)[] // Images displayed centrally, not tied to paragraphs (can be numbers or gif names)
 }
 
 export interface ContentSection {
@@ -12,13 +12,14 @@ export interface ContentSection {
   title: string
   content: string
   paragraphNumber?: number // Only for level 2 (## subsections)
-  imageNumber?: number // From mapping, for left overlay
+  imageNumber?: number // From mapping, for left overlay (JPG)
+  imageFile?: string // From mapping, for GIF or other formats (e.g., "gif1" -> gif1.gif)
   formatting?: TextFormatting[]
 }
 
 export interface ImageMapping {
-  paragraphToImage: Map<number, number> // p1 -> i9, p2 -> i10, etc.
-  restImages: number[] // Images for r-i23;i24;i25
+  paragraphToImage: Map<number, number | string> // p1 -> 9 or "gif1"
+  restImages: (number | string)[] // Images for r-i23;i24;gif1
 }
 
 export interface TextFormatting {
@@ -35,3 +36,6 @@ export interface LegacySkirtContent {
     text: string
   }[]
 }
+
+// Union type for all content types
+export type SkirtContent = RTFSkirtContent | LegacySkirtContent

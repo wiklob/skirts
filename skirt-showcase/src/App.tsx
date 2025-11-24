@@ -180,7 +180,7 @@ function App() {
             )}
 
             {/* Fallback to legacy content */}
-            {content && content.source === 'legacy' && (
+            {content && content.source === 'legacy' && selectedSkirt && (
               <>
                 {content.sections.map((section) => (
                   <SkirtSection

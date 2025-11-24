@@ -55,7 +55,7 @@ function rtfToPlainText(rtfContent: string): string {
 
   // Handle special characters BEFORE removing control words
   // Use Windows-1252 mapping for codes in the 0x80-0x9F range
-  text = text.replace(/\\'([0-9a-f]{2})/gi, (match, hex) => {
+  text = text.replace(/\\'([0-9a-f]{2})/gi, (_match, hex) => {
     const code = parseInt(hex, 16)
     // Use Windows-1252 mapping if in problematic range
     if (code >= 0x80 && code <= 0x9F && WIN1252_TO_UNICODE[code]) {
@@ -66,7 +66,7 @@ function rtfToPlainText(rtfContent: string): string {
   })
 
   // Handle Unicode characters
-  text = text.replace(/\\u(\d+)\?/g, (match, code) => {
+  text = text.replace(/\\u(\d+)\?/g, (_match, code) => {
     return String.fromCharCode(parseInt(code, 10))
   })
 
@@ -178,13 +178,20 @@ export function parseRTF(rtfContent: string): ContentSection[] {
  */
 export function applySectionImageMappings(
   sections: ContentSection[],
-  paragraphToImage: Map<number, number>
+  paragraphToImage: Map<number, number | string>
 ): ContentSection[] {
   return sections.map(section => {
     if (section.level === 2 && section.paragraphNumber) {
-      const imageNumber = paragraphToImage.get(section.paragraphNumber)
-      if (imageNumber) {
-        return { ...section, imageNumber }
+      const imageRef = paragraphToImage.get(section.paragraphNumber)
+      if (imageRef !== undefined) {
+        // If it's a number, it's a JPG image (imageNumber)
+        if (typeof imageRef === 'number') {
+          return { ...section, imageNumber: imageRef }
+        }
+        // If it's a string, it's a GIF or other format (imageFile)
+        if (typeof imageRef === 'string') {
+          return { ...section, imageFile: imageRef }
+        }
       }
     }
     return section

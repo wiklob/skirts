@@ -31,11 +31,11 @@ export function useSkirtContent(skirtType: SkirtType | null): UseSkirtContentRes
 
       try {
         // Try to load RTF file
-        const rtfFileName = `${skirtType.toUpperCase()}_SKIRT_TEXT.rtf`
-        const mappingFileName = `${skirtType.toUpperCase()}_SKIRT_TEXT_IMAGES.txt`
+        const rtfFileName = `${skirtType!.toUpperCase()}_SKIRT_TEXT.rtf`
+        const mappingFileName = `${skirtType!.toUpperCase()}_SKIRT_TEXT_IMAGES.txt`
 
-        const rtfPath = `/skirt-folders/sections/${skirtType}/${rtfFileName}`
-        const mappingPath = `/skirt-folders/sections/${skirtType}/${mappingFileName}`
+        const rtfPath = `/skirt-folders/sections/${skirtType!}/${rtfFileName}`
+        const mappingPath = `/skirt-folders/sections/${skirtType!}/${mappingFileName}`
 
         try {
           // Attempt to fetch RTF and mapping files

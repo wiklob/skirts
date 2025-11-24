@@ -1,7 +1,7 @@
 import './RestImages.css'
 
 interface RestImagesProps {
-  imageNumbers: number[]
+  imageNumbers: (number | string)[]
   skirtType: string
   onImageClick: (imagePath: string, breadcrumb: string) => void
 }
@@ -16,15 +16,28 @@ export const RestImages = ({ imageNumbers, skirtType, onImageClick }: RestImages
   return (
     <div className="rest-images-container">
       <div className="rest-images-grid">
-        {imageNumbers.map(imageNum => {
-          const imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${imageNum}.jpg`
-          const breadcrumb = `/skirt-database/${skirtType}/imagerow/${imageNum}.jpg`
+        {imageNumbers.map((imageRef, idx) => {
+          let imagePath: string
+          let breadcrumb: string
+          let key: string
+
+          if (typeof imageRef === 'number') {
+            // JPG image
+            imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${imageRef}.jpg`
+            breadcrumb = `/skirt-database/${skirtType}/imagerow/${imageRef}.jpg`
+            key = `img-${imageRef}`
+          } else {
+            // GIF or other format
+            imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${imageRef}.gif`
+            breadcrumb = `/skirt-database/${skirtType}/imagerow/${imageRef}.gif`
+            key = `gif-${imageRef}`
+          }
 
           return (
             <img
-              key={imageNum}
+              key={key}
               src={imagePath}
-              alt={`Rest image ${imageNum}`}
+              alt={`Rest image ${imageRef}`}
               className="rest-image"
               onClick={() => onImageClick(imagePath, breadcrumb)}
             />

@@ -39,16 +39,23 @@ export const RichTextSection = ({ section, skirtType, onImageClick, isNarrow }: 
   }
 
   // Only level 2 sections (## subsections) have images
-  const hasImage = section.level === 2 && section.imageNumber
+  const hasImage = section.level === 2 && (section.imageNumber || section.imageFile)
 
   // Construct image path from imagerow
-  const imagePath = hasImage
-    ? `/skirt-folders/sections/${skirtType}/imagerow/${section.imageNumber}.jpg`
-    : null
+  let imagePath: string | null = null
+  let breadcrumb = ''
 
-  const breadcrumb = imagePath
-    ? `/skirt-database/${skirtType}/imagerow/${section.imageNumber}.jpg`
-    : ''
+  if (hasImage) {
+    if (section.imageNumber) {
+      // JPG image
+      imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${section.imageNumber}.jpg`
+      breadcrumb = `/skirt-database/${skirtType}/imagerow/${section.imageNumber}.jpg`
+    } else if (section.imageFile) {
+      // GIF or other format
+      imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${section.imageFile}.gif`
+      breadcrumb = `/skirt-database/${skirtType}/imagerow/${section.imageFile}.gif`
+    }
+  }
 
   return (
     <div className="skirt-section">
@@ -79,11 +86,32 @@ export const RichTextSection = ({ section, skirtType, onImageClick, isNarrow }: 
 
           {section.content && (
             <div>
-              {section.content.split('\n\n').filter(p => p.trim()).map((paragraph, idx) => (
-                <p key={idx} style={{ marginBottom: '0.8em', lineHeight: '1.6' }}>
-                  {paragraph.trim()}
-                </p>
-              ))}
+              {section.content.split('\n\n').filter(p => p.trim()).map((paragraph, idx) => {
+                const trimmed = paragraph.trim()
+                const isExample = trimmed.startsWith('**Example with description**') || trimmed.toLowerCase().startsWith('example with description')
+
+                if (isExample) {
+                  // Remove the "Example with description" header from the text
+                  const contentWithoutHeader = trimmed.replace(/^\*\*Example with description\*\*\s*/i, '').replace(/^Example with description\s*/i, '')
+
+                  return (
+                    <p key={idx} style={{
+                      marginBottom: '0.8em',
+                      lineHeight: '1.6',
+                      fontFamily: 'monospace',
+                      fontSize: '0.9em'
+                    }}>
+                      {contentWithoutHeader}
+                    </p>
+                  )
+                }
+
+                return (
+                  <p key={idx} style={{ marginBottom: '0.8em', lineHeight: '1.6' }}>
+                    {trimmed}
+                  </p>
+                )
+              })}
             </div>
           )}
         </div>

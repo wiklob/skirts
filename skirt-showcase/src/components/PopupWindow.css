@@ -101,7 +101,6 @@
   width: auto;
   object-fit: contain;
   flex-shrink: 0;
-  border-radius: 4px;
   transition: transform 0.2s ease;
   cursor: pointer;
 }
