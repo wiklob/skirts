@@ -4,7 +4,7 @@ import './SkirtSection.css'
 interface SkirtSectionProps {
   skirtType: string
   sectionNumber: number
-  onImageClick: (imagePath: string, breadcrumb: string) => void
+  onImageClick: (imagePath: string, breadcrumb: string, description?: string) => void
 }
 
 export const SkirtSection = ({ skirtType, sectionNumber, onImageClick }: SkirtSectionProps) => {

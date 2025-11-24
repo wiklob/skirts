@@ -5,7 +5,7 @@ import './SkirtSection.css'
 interface RichTextSectionProps {
   section: ContentSection
   skirtType: string
-  onImageClick: (imagePath: string, breadcrumb: string) => void
+  onImageClick: (imagePath: string, breadcrumb: string, description?: string) => void
   isNarrow: boolean
 }
 
@@ -65,8 +65,13 @@ export const RichTextSection = ({ section, skirtType, onImageClick, isNarrow }: 
             <img
               src={imagePath}
               alt={`${section.title}`}
-              onClick={() => onImageClick(imagePath, breadcrumb)}
+              onClick={() => onImageClick(imagePath, breadcrumb, section.imageDescription)}
             />
+            {section.imageDescription && (
+              <div className="image-caption">
+                {section.imageDescription}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -131,8 +136,13 @@ export const RichTextSection = ({ section, skirtType, onImageClick, isNarrow }: 
               <img
                 src={imagePath}
                 alt={`${section.title}`}
-                onClick={() => onImageClick(imagePath, breadcrumb)}
+                onClick={() => onImageClick(imagePath, breadcrumb, section.imageDescription)}
               />
+              {section.imageDescription && (
+                <div className="image-caption">
+                  {section.imageDescription}
+                </div>
+              )}
             </div>
           )}
         </>

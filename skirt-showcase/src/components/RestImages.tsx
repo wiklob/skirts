@@ -1,14 +1,16 @@
+import type { RestImageMapping } from '../types/skirtContent'
 import './RestImages.css'
 
 interface RestImagesProps {
-  imageNumbers: (number | string)[]
+  imageNumbers: RestImageMapping[]
   skirtType: string
-  onImageClick: (imagePath: string, breadcrumb: string) => void
+  onImageClick: (imagePath: string, breadcrumb: string, description?: string) => void
 }
 
 /**
  * Displays "rest" images centrally in the content area
  * These are images marked with "r-" in the mapping file
+ * Supports click targets: display one image but open a different one on click
  */
 export const RestImages = ({ imageNumbers, skirtType, onImageClick }: RestImagesProps) => {
   if (imageNumbers.length === 0) return null
@@ -16,31 +18,54 @@ export const RestImages = ({ imageNumbers, skirtType, onImageClick }: RestImages
   return (
     <div className="rest-images-container">
       <div className="rest-images-grid">
-        {imageNumbers.map((imageRef) => {
-          let imagePath: string
-          let breadcrumb: string
+        {imageNumbers.map((mapping) => {
+          // Path to display
+          let displayPath: string
           let key: string
 
-          if (typeof imageRef === 'number') {
+          if (typeof mapping.displayImage === 'number') {
             // JPG image
-            imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${imageRef}.jpg`
-            breadcrumb = `/skirt-database/${skirtType}/imagerow/${imageRef}.jpg`
-            key = `img-${imageRef}`
+            displayPath = `/skirt-folders/sections/${skirtType}/imagerow/${mapping.displayImage}.jpg`
+            key = `img-${mapping.displayImage}`
           } else {
             // GIF or other format
-            imagePath = `/skirt-folders/sections/${skirtType}/imagerow/${imageRef}.gif`
-            breadcrumb = `/skirt-database/${skirtType}/imagerow/${imageRef}.gif`
-            key = `gif-${imageRef}`
+            displayPath = `/skirt-folders/sections/${skirtType}/imagerow/${mapping.displayImage}.gif`
+            key = `gif-${mapping.displayImage}`
+          }
+
+          // Path to open when clicked
+          let clickPath: string
+          let clickBreadcrumb: string
+
+          if (mapping.clickTarget) {
+            // Open the click target GIF
+            clickPath = `/skirt-folders/sections/${skirtType}/imagerow/${mapping.clickTarget}.gif`
+            clickBreadcrumb = `/skirt-database/${skirtType}/imagerow/${mapping.clickTarget}.gif`
+          } else {
+            // Open the display image itself
+            if (typeof mapping.displayImage === 'number') {
+              clickPath = `/skirt-folders/sections/${skirtType}/imagerow/${mapping.displayImage}.jpg`
+              clickBreadcrumb = `/skirt-database/${skirtType}/imagerow/${mapping.displayImage}.jpg`
+            } else {
+              clickPath = `/skirt-folders/sections/${skirtType}/imagerow/${mapping.displayImage}.gif`
+              clickBreadcrumb = `/skirt-database/${skirtType}/imagerow/${mapping.displayImage}.gif`
+            }
           }
 
           return (
-            <img
-              key={key}
-              src={imagePath}
-              alt={`Rest image ${imageRef}`}
-              className="rest-image"
-              onClick={() => onImageClick(imagePath, breadcrumb)}
-            />
+            <div key={key} className="rest-image-item">
+              <img
+                src={displayPath}
+                alt={`Rest image ${mapping.displayImage}`}
+                className="rest-image"
+                onClick={() => onImageClick(clickPath, clickBreadcrumb, mapping.description)}
+              />
+              {mapping.description && (
+                <div className="rest-image-caption">
+                  {mapping.description}
+                </div>
+              )}
+            </div>
           )
         })}
       </div>

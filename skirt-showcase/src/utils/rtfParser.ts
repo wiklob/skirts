@@ -1,4 +1,4 @@
-import type { ContentSection } from '../types/skirtContent'
+import type { ContentSection, ParagraphImageMapping } from '../types/skirtContent'
 
 /**
  * Windows-1252 to Unicode character mapping for RTF special characters
@@ -115,7 +115,22 @@ export function parseRTF(rtfContent: string): ContentSection[] {
 
     // Check for main section (# header) - single # not followed by another #
     if (line.match(/^#[^#]/)) {
-      const title = line.replace(/^#+\s*/, '').trim()
+      let title = line.replace(/^#+\s*/, '').trim()
+
+      // If title is empty (# on its own line), look at the next non-empty line
+      if (!title) {
+        let j = i + 1
+        while (j < lines.length) {
+          const nextLine = lines[j].trim()
+          if (nextLine && !nextLine.startsWith('#')) {
+            title = nextLine
+            i = j // Skip the line we just used as title
+            break
+          }
+          j++
+        }
+      }
+
       currentLevel1Section = {
         level: 1,
         title,
@@ -178,19 +193,27 @@ export function parseRTF(rtfContent: string): ContentSection[] {
  */
 export function applySectionImageMappings(
   sections: ContentSection[],
-  paragraphToImage: Map<number, number | string>
+  paragraphToImage: Map<number, ParagraphImageMapping>
 ): ContentSection[] {
   return sections.map(section => {
     if (section.level === 2 && section.paragraphNumber) {
-      const imageRef = paragraphToImage.get(section.paragraphNumber)
-      if (imageRef !== undefined) {
+      const mapping = paragraphToImage.get(section.paragraphNumber)
+      if (mapping) {
         // If it's a number, it's a JPG image (imageNumber)
-        if (typeof imageRef === 'number') {
-          return { ...section, imageNumber: imageRef }
+        if (typeof mapping.image === 'number') {
+          return {
+            ...section,
+            imageNumber: mapping.image,
+            imageDescription: mapping.description
+          }
         }
         // If it's a string, it's a GIF or other format (imageFile)
-        if (typeof imageRef === 'string') {
-          return { ...section, imageFile: imageRef }
+        if (typeof mapping.image === 'string') {
+          return {
+            ...section,
+            imageFile: mapping.image,
+            imageDescription: mapping.description
+          }
         }
       }
     }

@@ -4,7 +4,7 @@ export interface RTFSkirtContent {
   source: 'rtf'
   sections: ContentSection[]
   imageMappings: ImageMapping
-  restImages: (number | string)[] // Images displayed centrally, not tied to paragraphs (can be numbers or gif names)
+  restImages: RestImageMapping[] // Images displayed centrally, not tied to paragraphs
 }
 
 export interface ContentSection {
@@ -14,12 +14,24 @@ export interface ContentSection {
   paragraphNumber?: number // Only for level 2 (## subsections)
   imageNumber?: number // From mapping, for left overlay (JPG)
   imageFile?: string // From mapping, for GIF or other formats (e.g., "gif1" -> gif1.gif)
+  imageDescription?: string // Description for the image
   formatting?: TextFormatting[]
 }
 
+export interface RestImageMapping {
+  displayImage: number | string // What to display (i23 or gif1)
+  clickTarget?: string // What to open when clicked (gif2)
+  description?: string // Description for the image
+}
+
+export interface ParagraphImageMapping {
+  image: number | string // Image reference (number for JPG, string for GIF)
+  description?: string // Optional description
+}
+
 export interface ImageMapping {
-  paragraphToImage: Map<number, number | string> // p1 -> 9 or "gif1"
-  restImages: (number | string)[] // Images for r-i23;i24;gif1
+  paragraphToImage: Map<number, ParagraphImageMapping> // p1 -> {image: 9, description: "..."}
+  restImages: RestImageMapping[] // Images for r-i23-gif2;i24-gif3
 }
 
 export interface TextFormatting {

@@ -8,7 +8,7 @@ interface PopupWindowProps {
   title: string
   children: React.ReactNode
   skirtType?: string
-  onImageClick?: (imagePath: string, breadcrumb: string) => void
+  onImageClick?: (imagePath: string, breadcrumb: string, description?: string) => void
 }
 
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw' | null

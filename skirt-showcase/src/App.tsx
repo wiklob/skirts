@@ -13,7 +13,7 @@ type SkirtType = 'pencil' | 'pleated' | 'trapeze' | 'wrap' | 'aboutus' | 'sketch
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
-  const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string } | null>(null)
+  const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string; description?: string } | null>(null)
   const [isNarrow, setIsNarrow] = useState(false)
 
   // Load skirt content using the new hook
@@ -144,7 +144,7 @@ function App() {
           onClose={() => setSelectedSkirt(null)}
           title={`/skirt-database/${selectedSkirt}`}
           skirtType={selectedSkirt}
-          onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+          onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
         >
           <div className="popup-skirt-sections">
             <div className="popup-banner">
@@ -156,15 +156,42 @@ function App() {
 
             {loading && <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>}
 
+            {/* Special case: Sketchbook - just display the image */}
+            {selectedSkirt === 'sketchbook' && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '2rem',
+                width: '100%',
+                height: '100%'
+              }}>
+                <img
+                  src="/skirt-folders/sketchbook/image1.png"
+                  alt="Sketchbook"
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    objectFit: 'contain',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => setZoomedImage({
+                    path: '/skirt-folders/sketchbook/image1.png',
+                    breadcrumb: '/skirt-database/sketchbook/image1.png'
+                  })}
+                />
+              </div>
+            )}
+
             {/* Render RTF content */}
-            {content && content.source === 'rtf' && (
+            {selectedSkirt !== 'sketchbook' && content && content.source === 'rtf' && (
               <>
                 {content.sections.map((section, index) => (
                   <RichTextSection
                     key={index}
                     section={section}
                     skirtType={selectedSkirt}
-                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                    onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
                     isNarrow={isNarrow}
                   />
                 ))}
@@ -173,21 +200,21 @@ function App() {
                   <RestImages
                     imageNumbers={content.restImages}
                     skirtType={selectedSkirt}
-                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                    onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
                   />
                 )}
               </>
             )}
 
             {/* Fallback to legacy content */}
-            {content && content.source === 'legacy' && selectedSkirt && (
+            {selectedSkirt !== 'sketchbook' && content && content.source === 'legacy' && selectedSkirt && (
               <>
                 {content.sections.map((section) => (
                   <SkirtSection
                     key={section.sectionNumber}
                     skirtType={selectedSkirt}
                     sectionNumber={section.sectionNumber}
-                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                    onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
                   />
                 ))}
               </>
@@ -201,6 +228,7 @@ function App() {
         <ImageZoomPopup
           imagePath={zoomedImage.path}
           breadcrumb={zoomedImage.breadcrumb}
+          description={zoomedImage.description}
           onClose={() => setZoomedImage(null)}
         />
       )}

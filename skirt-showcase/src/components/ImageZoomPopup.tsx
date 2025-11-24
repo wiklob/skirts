@@ -6,9 +6,10 @@ interface ImageZoomPopupProps {
   imagePath: string
   onClose: () => void
   breadcrumb?: string
+  description?: string
 }
 
-export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopupProps) => {
+export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb, description }: ImageZoomPopupProps) => {
   const [size, setSize] = useState({ width: 400, height: 500 })
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isResizing, setIsResizing] = useState(false)
@@ -172,6 +173,11 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb }: ImageZoomPopu
           </button>
           {breadcrumb && <span className="image-zoom-title">{breadcrumb}</span>}
         </div>
+        {description && (
+          <div className="image-zoom-description">
+            {description}
+          </div>
+        )}
         <div className="image-zoom-content">
           <img src={imagePath} alt="Zoomed view" />
         </div>
