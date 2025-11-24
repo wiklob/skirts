@@ -2,15 +2,22 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { PopupWindow } from './components/PopupWindow'
 import { SkirtSection } from './components/SkirtSection'
+import { RichTextSection } from './components/RichTextSection'
+import { RestImages } from './components/RestImages'
 import { ImageZoomPopup } from './components/ImageZoomPopup'
+import { useSkirtContent } from './hooks/useSkirtContent'
 import './App.css'
 
-type SkirtType = 'pencil' | 'pleated' | 'trapeze' | 'wrap' | null
+type SkirtType = 'pencil' | 'pleated' | 'trapeze' | 'wrap' | 'aboutus' | 'sketchbook' | null
 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
   const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string } | null>(null)
+  const [isNarrow, setIsNarrow] = useState(false)
+
+  // Load skirt content using the new hook
+  const { content, loading } = useSkirtContent(selectedSkirt)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -36,6 +43,16 @@ function App() {
       setCurrentFrame(Math.round(latest))
     })
   }, [frameIndex])
+
+  // Check window width for narrow detection
+  useEffect(() => {
+    const checkWidth = () => {
+      setIsNarrow(window.innerWidth < 768)
+    }
+    checkWidth()
+    window.addEventListener('resize', checkWidth)
+    return () => window.removeEventListener('resize', checkWidth)
+  }, [])
 
   return (
     <div className="app">
@@ -94,6 +111,14 @@ function App() {
               <div className="category-item" onClick={() => setSelectedSkirt('wrap')}>
                 <img src="/folder_images/wrap_folder.png" alt="Wrap Skirt Folder" className="folder-icon" />
               </div>
+
+              <div className="category-item" onClick={() => setSelectedSkirt('aboutus')}>
+                <img src="/folder_images/aboutus_folder.png" alt="About Us Folder" className="folder-icon" />
+              </div>
+
+              <div className="category-item" onClick={() => setSelectedSkirt('sketchbook')}>
+                <img src="/folder_images/sketchbook_folder.png" alt="Sketchbook Folder" className="folder-icon" />
+              </div>
             </div>
           </div>
 
@@ -128,21 +153,45 @@ function App() {
               </h1>
               <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
             </div>
-            <SkirtSection
-              skirtType={selectedSkirt}
-              sectionNumber={1}
-              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
-            />
-            <SkirtSection
-              skirtType={selectedSkirt}
-              sectionNumber={2}
-              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
-            />
-            <SkirtSection
-              skirtType={selectedSkirt}
-              sectionNumber={3}
-              onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
-            />
+
+            {loading && <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>}
+
+            {/* Render RTF content */}
+            {content && content.source === 'rtf' && (
+              <>
+                {content.sections.map((section, index) => (
+                  <RichTextSection
+                    key={index}
+                    section={section}
+                    skirtType={selectedSkirt}
+                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                    isNarrow={isNarrow}
+                  />
+                ))}
+                {/* Render rest images centrally */}
+                {content.restImages.length > 0 && (
+                  <RestImages
+                    imageNumbers={content.restImages}
+                    skirtType={selectedSkirt}
+                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                  />
+                )}
+              </>
+            )}
+
+            {/* Fallback to legacy content */}
+            {content && content.source === 'legacy' && (
+              <>
+                {content.sections.map((section) => (
+                  <SkirtSection
+                    key={section.sectionNumber}
+                    skirtType={selectedSkirt}
+                    sectionNumber={section.sectionNumber}
+                    onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                  />
+                ))}
+              </>
+            )}
           </div>
         </PopupWindow>
       )}

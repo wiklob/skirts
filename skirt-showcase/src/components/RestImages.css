@@ -1,0 +1,39 @@
+.rest-images-container {
+  width: 100%;
+  padding: 3rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rest-images-grid {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1200px;
+}
+
+.rest-image {
+  max-width: 300px;
+  max-height: 400px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 1px solid #ccc;
+}
+
+.rest-image:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .rest-images-grid {
+    gap: 1rem;
+  }
+
+  .rest-image {
+    max-width: 200px;
+    max-height: 300px;
+  }
+}
