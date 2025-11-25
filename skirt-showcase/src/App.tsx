@@ -5,6 +5,7 @@ import { SkirtSection } from './components/SkirtSection'
 import { RichTextSection } from './components/RichTextSection'
 import { RestImages } from './components/RestImages'
 import { ImageZoomPopup } from './components/ImageZoomPopup'
+import { SketchbookViewer } from './components/SketchbookViewer'
 import { useSkirtContent } from './hooks/useSkirtContent'
 import './App.css'
 
@@ -228,8 +229,15 @@ function App() {
               </div>
             )}
 
+            {/* Special case: Sketchbook - page flip viewer */}
+            {selectedSkirt === 'sketchbook' && (
+              <SketchbookViewer
+                onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+              />
+            )}
+
             {/* Render RTF content */}
-            {selectedSkirt !== 'aboutus' && content && content.source === 'rtf' && (
+            {selectedSkirt !== 'aboutus' && selectedSkirt !== 'sketchbook' && content && content.source === 'rtf' && (
               <>
                 {content.sections.map((section, index) => (
                   <RichTextSection
@@ -252,7 +260,7 @@ function App() {
             )}
 
             {/* Fallback to legacy content */}
-            {selectedSkirt !== 'aboutus' && content && content.source === 'legacy' && selectedSkirt && (
+            {selectedSkirt !== 'aboutus' && selectedSkirt !== 'sketchbook' && content && content.source === 'legacy' && selectedSkirt && (
               <>
                 {content.sections.map((section) => (
                   <SkirtSection

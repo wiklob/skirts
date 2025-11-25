@@ -1,0 +1,95 @@
+.sketchbook-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.sketchbook-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow: hidden;
+  position: relative;
+  background: #f5f5f0;
+}
+
+.sketchbook-flipbook {
+  margin: 0 auto;
+}
+
+.sketchbook-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sketchbook-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Controls */
+.sketchbook-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  background: #f5f5f0;
+  border-top: 1px solid #ddd;
+  flex-shrink: 0;
+  min-height: 60px;
+}
+
+.sketchbook-btn {
+  padding: 8px 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #2c3e50;
+  min-width: 100px;
+}
+
+.sketchbook-btn:hover:not(:disabled) {
+  background: #f8f8f8;
+  border-color: #999;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sketchbook-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.sketchbook-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sketchbook-page-indicator {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 100px;
+  text-align: center;
+}

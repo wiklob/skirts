@@ -280,7 +280,7 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
         </div>
 
         {/* Image Row Bar */}
-        {skirtType && (
+        {skirtType && skirtType !== 'sketchbook' && skirtType !== 'aboutus' && (
           <div
             className="popup-image-bar"
             onMouseEnter={handleMouseEnter}
