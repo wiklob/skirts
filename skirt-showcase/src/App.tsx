@@ -149,15 +149,19 @@ function App() {
           <div className="popup-skirt-sections">
             <div className="popup-banner">
               <h1 className="popup-banner-title">
-                {selectedSkirt.toUpperCase()}
+                {selectedSkirt === 'aboutus' ? 'ABOUT US' :
+                 selectedSkirt === 'sketchbook' ? 'SKETCH BOOK' :
+                 selectedSkirt.toUpperCase()}
               </h1>
-              <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
+              {selectedSkirt !== 'aboutus' && selectedSkirt !== 'sketchbook' && (
+                <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
+              )}
             </div>
 
             {loading && <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>}
 
-            {/* Special case: Sketchbook - just display the image */}
-            {selectedSkirt === 'sketchbook' && (
+            {/* Special case: About Us - just display the image */}
+            {selectedSkirt === 'aboutus' && (
               <div style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -167,8 +171,8 @@ function App() {
                 height: '100%'
               }}>
                 <img
-                  src="/skirt-folders/sketchbook/image1.png"
-                  alt="Sketchbook"
+                  src="/skirt-folders/aboutus/image1.png"
+                  alt="About Us"
                   style={{
                     maxWidth: '100%',
                     maxHeight: '100%',
@@ -176,15 +180,15 @@ function App() {
                     cursor: 'pointer'
                   }}
                   onClick={() => setZoomedImage({
-                    path: '/skirt-folders/sketchbook/image1.png',
-                    breadcrumb: '/skirt-database/sketchbook/image1.png'
+                    path: '/skirt-folders/aboutus/image1.png',
+                    breadcrumb: '/skirt-database/aboutus/image1.png'
                   })}
                 />
               </div>
             )}
 
             {/* Render RTF content */}
-            {selectedSkirt !== 'sketchbook' && content && content.source === 'rtf' && (
+            {selectedSkirt !== 'aboutus' && content && content.source === 'rtf' && (
               <>
                 {content.sections.map((section, index) => (
                   <RichTextSection
@@ -207,7 +211,7 @@ function App() {
             )}
 
             {/* Fallback to legacy content */}
-            {selectedSkirt !== 'sketchbook' && content && content.source === 'legacy' && selectedSkirt && (
+            {selectedSkirt !== 'aboutus' && content && content.source === 'legacy' && selectedSkirt && (
               <>
                 {content.sections.map((section) => (
                   <SkirtSection

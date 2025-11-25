@@ -114,7 +114,7 @@ export function parseRTF(rtfContent: string): ContentSection[] {
     if (!line) continue
 
     // Check for main section (# header) - single # not followed by another #
-    if (line.match(/^#[^#]/)) {
+    if (line.startsWith('#') && !line.startsWith('##')) {
       let title = line.replace(/^#+\s*/, '').trim()
 
       // If title is empty (# on its own line), look at the next non-empty line

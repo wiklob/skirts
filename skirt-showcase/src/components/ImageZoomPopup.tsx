@@ -173,13 +173,13 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb, description }: 
           </button>
           {breadcrumb && <span className="image-zoom-title">{breadcrumb}</span>}
         </div>
-        {description && (
-          <div className="image-zoom-description">
-            {description}
-          </div>
-        )}
         <div className="image-zoom-content">
           <img src={imagePath} alt="Zoomed view" />
+          {description && (
+            <div className="image-zoom-description">
+              {description}
+            </div>
+          )}
         </div>
 
         {/* Resize Handles */}

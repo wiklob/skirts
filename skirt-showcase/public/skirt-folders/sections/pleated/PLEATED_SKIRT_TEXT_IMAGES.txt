@@ -4,16 +4,16 @@ p3-i11-[“Delfos” skirt by Fortuny, 1909]
 p4-i12-[Dior’s New Look pleated skirt, 1947]
 p5-i16-[mini pleated skirt, 1970's]
 p6-i17-[Issey Miyake Pleats Please skirt, early 2000's]
-p7-i4
-p8-i5
-p9-i6
-p10-gif1
-p11-i7
-p12-i8
-p13-i14
-p14-i3
-p15-i19
-p16-i20
+p7-i4-[Knife Pleats]
+p8-i5-[Box Pleats]
+p9-i6-[Accordion/Plissé Pleats]
+p10-gif1-[Sunburst (Fan) Pleats]
+p11-i7-[Cartridge Pleats]
+p12-i8-[Draped/Couture Pleats]
+p13-i14-[Marylin Monroe Circa 1955]
+p14-i3-[Madame Grés Circa 1945]
+p15-i19-[Issey Miyake Circa 2013]
+p16-i20-[Christian Dior Spring 2014]
 p17-i21-[Issey Miyake skirt]
 p18-i22-[ZARA skirt]
-r-i23-gif2-[DIOR - pleated mini skirt - look 72];i24-gif3-[BALENCIAGA - look 44];i25-gif4-[ISSEY MIYAKE - TAILORED PLEATS 2 - look 13]
+r-i23-gif2-[DIOR - pleated mini skirt - look 72];i24-gif3-[ISSEY MIYAKE - TAILORED PLEATS 2 - look 13];i25-gif4-[BALENCIAGA - look 44]
