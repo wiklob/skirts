@@ -15,9 +15,23 @@ function App() {
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
   const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string; description?: string } | null>(null)
   const [isNarrow, setIsNarrow] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Load skirt content using the new hook
   const { content, loading } = useSkirtContent(selectedSkirt)
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent || navigator.vendor
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      const isSmallScreen = window.innerWidth <= 768
+      setIsMobile(isMobileDevice || isSmallScreen)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -32,6 +46,7 @@ function App() {
   const scale = useTransform(scrollYProgress, [0, 0.6], [0.2, 2.5])
   const opacity = useTransform(scrollYProgress, [0.6, 0.9], [1, 0])
   const blur = useTransform(scrollYProgress, [0.6, 0.9], [0, 20])
+  const blurFilter = useTransform(blur, (b) => `blur(${b}px)`)
   const contentOpacity = useTransform(scrollYProgress, [0.7, 0.9], [0, 1])
 
   // State to hold current frame number
@@ -54,6 +69,32 @@ function App() {
     return () => window.removeEventListener('resize', checkWidth)
   }, [])
 
+  // Show mobile message
+  if (isMobile) {
+    return (
+      <div className="app" style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        padding: '2rem',
+        background: '#000'
+      }}>
+        <div style={{
+          color: '#fff',
+          fontSize: 'clamp(1.2rem, 4vw, 2rem)',
+          textAlign: 'center',
+          fontFamily: 'monospace',
+          letterSpacing: '0.05em',
+          lineHeight: '1.6',
+          maxWidth: '600px'
+        }}>
+          this project is greater than mobile; use desktop browser instead
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="app">
       {/* Opening Animation Section */}
@@ -62,7 +103,7 @@ function App() {
           className="skirt-animation-container"
           style={{
             opacity,
-            filter: useTransform(blur, (b) => `blur(${b}px)`)
+            filter: blurFilter
           }}
         >
           <motion.img

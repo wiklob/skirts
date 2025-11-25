@@ -113,7 +113,7 @@ body {
 .content-section {
   min-height: 100vh;
   background: white;
-  padding: 4rem 2rem;
+  padding: 8rem 2rem 4rem 2rem;
   position: relative;
   z-index: 10;
   user-select: none;
@@ -173,7 +173,7 @@ body {
 .designed-by-section {
   max-width: 1200px;
   margin: 0 auto 6rem;
-  padding: 0;
+  padding: 128px 0 0 0;
 }
 
 .designed-by-line {
