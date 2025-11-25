@@ -61,6 +61,12 @@
   flex-shrink: 0;
 }
 
+.image-zoom-close::before {
+  content: '×';
+  transform: translateY(-1px);
+  display: block;
+}
+
 .image-zoom-close:hover {
   background: #ff3b30;
 }

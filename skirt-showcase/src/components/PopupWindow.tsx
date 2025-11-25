@@ -257,7 +257,6 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
           style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
         >
           <button className="popup-close" onClick={onClose}>
-            ×
           </button>
           <span className="popup-title">{title}</span>
         </div>

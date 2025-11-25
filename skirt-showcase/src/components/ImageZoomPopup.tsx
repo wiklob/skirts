@@ -169,7 +169,6 @@ export const ImageZoomPopup = ({ imagePath, onClose, breadcrumb, description }: 
           onMouseDown={handleDragStart}
         >
           <button className="image-zoom-close" onClick={onClose}>
-            ×
           </button>
           {breadcrumb && <span className="image-zoom-title">{breadcrumb}</span>}
         </div>

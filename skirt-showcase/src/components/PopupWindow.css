@@ -51,6 +51,12 @@
   transition: all 0.2s;
 }
 
+.popup-close::before {
+  content: '×';
+  transform: translateY(-1px);
+  display: block;
+}
+
 .popup-close:hover {
   background: #ff3b30;
 }
