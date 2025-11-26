@@ -4,9 +4,11 @@ import './SketchbookViewer.css'
 
 interface SketchbookViewerProps {
   onImageClick?: (imagePath: string, breadcrumb: string) => void
+  onPageChange?: (page: number, totalPages: number) => void
+  onBookReady?: (bookRef: any) => void
 }
 
-export const SketchbookViewer = ({ }: SketchbookViewerProps) => {
+export const SketchbookViewer = ({ onPageChange, onBookReady }: SketchbookViewerProps) => {
   const [imagesLoaded, setImagesLoaded] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const bookRef = useRef<any>(null)
@@ -50,19 +52,17 @@ export const SketchbookViewer = ({ }: SketchbookViewerProps) => {
 
   const handleFlip = (e: any) => {
     setCurrentPage(e.data)
-  }
-
-  const handleNext = () => {
-    if (bookRef.current) {
-      bookRef.current.pageFlip().flipNext()
+    if (onPageChange) {
+      onPageChange(e.data, totalPages)
     }
   }
 
-  const handlePrev = () => {
-    if (bookRef.current) {
-      bookRef.current.pageFlip().flipPrev()
+  // Expose book ref to parent when ready
+  useEffect(() => {
+    if (imagesLoaded && bookRef.current && onBookReady) {
+      onBookReady(bookRef.current)
     }
-  }
+  }, [imagesLoaded, onBookReady])
 
   const handleImageClick = (_index: number) => {
     // Disabled - no zoom popup for sketchbook
@@ -118,26 +118,6 @@ export const SketchbookViewer = ({ }: SketchbookViewerProps) => {
             </div>
           ))}
         </HTMLFlipBook>
-      </div>
-
-      <div className="sketchbook-controls">
-        <button
-          className="sketchbook-btn sketchbook-btn-prev"
-          onClick={handlePrev}
-          disabled={currentPage === 0}
-        >
-          ← Prev
-        </button>
-        <span className="sketchbook-page-indicator">
-          Page {currentPage + 1}/{totalPages}
-        </span>
-        <button
-          className="sketchbook-btn sketchbook-btn-next"
-          onClick={handleNext}
-          disabled={currentPage === totalPages - 1}
-        >
-          Next →
-        </button>
       </div>
     </div>
   )

@@ -9,11 +9,15 @@ interface PopupWindowProps {
   children: React.ReactNode
   skirtType?: string
   onImageClick?: (imagePath: string, breadcrumb: string, description?: string) => void
+  sketchbookControls?: {
+    onNext: () => void
+    onPrev: () => void
+  }
 }
 
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw' | null
 
-export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onImageClick }: PopupWindowProps) => {
+export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onImageClick, sketchbookControls }: PopupWindowProps) => {
   const [size, setSize] = useState({ width: 800, height: 650 })
   const [position, setPosition] = useState({ x: 100, y: 100 })
   const [isDragging, setIsDragging] = useState(false)
@@ -259,10 +263,26 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
           <button className="popup-close" onClick={onClose}>
           </button>
           <span className="popup-title">{title}</span>
-          {skirtType === 'sketchbook' && (
+          {skirtType === 'sketchbook' && sketchbookControls && (
             <div className="sketchbook-titlebar-controls">
-              <button className="sketchbook-nav-btn">‹</button>
-              <button className="sketchbook-nav-btn">›</button>
+              <button
+                className="sketchbook-nav-btn"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  sketchbookControls.onPrev()
+                }}
+              >
+                ‹
+              </button>
+              <button
+                className="sketchbook-nav-btn"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  sketchbookControls.onNext()
+                }}
+              >
+                ›
+              </button>
             </div>
           )}
         </div>

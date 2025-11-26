@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { PopupWindow } from './components/PopupWindow'
 import { SkirtSection } from './components/SkirtSection'
@@ -17,9 +17,20 @@ function App() {
   const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string; description?: string } | null>(null)
   const [isNarrow, setIsNarrow] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [sketchbookPage, setSketchbookPage] = useState({ current: 1, total: 10 })
+  const [sketchbookRef, setSketchbookRef] = useState<any>(null)
 
   // Load skirt content using the new hook
   const { content, loading } = useSkirtContent(selectedSkirt)
+
+  // Stable callbacks for sketchbook
+  const handlePageChange = useCallback((page: number, total: number) => {
+    setSketchbookPage({ current: page + 1, total })
+  }, [])
+
+  const handleBookReady = useCallback((ref: any) => {
+    setSketchbookRef(ref)
+  }, [])
 
   // Detect mobile device
   useEffect(() => {
@@ -187,18 +198,22 @@ function App() {
           title={`/skirt-database/${selectedSkirt}`}
           skirtType={selectedSkirt}
           onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
+          sketchbookControls={selectedSkirt === 'sketchbook' && sketchbookRef ? {
+            onNext: () => sketchbookRef.pageFlip().flipNext(),
+            onPrev: () => sketchbookRef.pageFlip().flipPrev()
+          } : undefined}
         >
           <div className="popup-skirt-sections">
-            <div className="popup-banner">
-              <h1 className="popup-banner-title">
-                {selectedSkirt === 'aboutus' ? 'ABOUT US' :
-                 selectedSkirt === 'sketchbook' ? 'SKETCH BOOK' :
-                 selectedSkirt.toUpperCase()}
-              </h1>
-              {selectedSkirt !== 'aboutus' && selectedSkirt !== 'sketchbook' && (
-                <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
-              )}
-            </div>
+            {selectedSkirt !== 'sketchbook' && (
+              <div className="popup-banner">
+                <h1 className="popup-banner-title">
+                  {selectedSkirt === 'aboutus' ? 'ABOUT US' : selectedSkirt?.toUpperCase()}
+                </h1>
+                {selectedSkirt !== 'aboutus' && (
+                  <img src="/skirt_title_gif_3.gif" alt="Skirt" className="popup-banner-gif" />
+                )}
+              </div>
+            )}
 
             {loading && <div style={{ padding: '2rem', textAlign: 'center' }}>Loading...</div>}
 
@@ -233,6 +248,8 @@ function App() {
             {selectedSkirt === 'sketchbook' && (
               <SketchbookViewer
                 onImageClick={(path, breadcrumb) => setZoomedImage({ path, breadcrumb })}
+                onPageChange={handlePageChange}
+                onBookReady={handleBookReady}
               />
             )}
 
