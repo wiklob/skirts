@@ -96,22 +96,34 @@ function App() {
     return (
       <div className="app" style={{
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'column',
         minHeight: '100vh',
-        padding: '2rem',
         background: '#000'
       }}>
+        <div className="sticky-banner">
+          <div className="banner-content">
+            <h1 className="banner-title">SKIRT</h1>
+            <img src="/database_gif.gif" alt="Database" className="banner-gif" />
+          </div>
+        </div>
         <div style={{
-          color: '#fff',
-          fontSize: 'clamp(1.2rem, 4vw, 2rem)',
-          textAlign: 'center',
-          fontFamily: 'monospace',
-          letterSpacing: '0.05em',
-          lineHeight: '1.6',
-          maxWidth: '600px'
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+          padding: '2rem'
         }}>
-          this project is greater than mobile; use desktop browser instead
+          <div style={{
+            color: '#fff',
+            fontSize: 'clamp(1.2rem, 4vw, 2rem)',
+            textAlign: 'center',
+            fontFamily: 'monospace',
+            letterSpacing: '0.05em',
+            lineHeight: '1.6',
+            maxWidth: '600px'
+          }}>
+            this project is greater than mobile; use desktop browser instead
+          </div>
         </div>
       </div>
     )
