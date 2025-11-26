@@ -17,7 +17,7 @@ function App() {
   const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string; description?: string } | null>(null)
   const [isNarrow, setIsNarrow] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [sketchbookPage, setSketchbookPage] = useState({ current: 1, total: 10 })
+  const [_sketchbookPage, setSketchbookPage] = useState({ current: 1, total: 10 })
   const [sketchbookRef, setSketchbookRef] = useState<any>(null)
 
   // Load skirt content using the new hook
@@ -25,7 +25,7 @@ function App() {
 
   // Extract image descriptions from content for popup-image-bar
   const imageDescriptions: Record<number, string> = {}
-  if (content && content.sections) {
+  if (content && content.source === 'rtf' && content.sections) {
     content.sections.forEach(section => {
       if (section.imageNumber && section.imageDescription) {
         imageDescriptions[section.imageNumber] = section.imageDescription

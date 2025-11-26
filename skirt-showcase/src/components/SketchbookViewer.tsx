@@ -10,7 +10,7 @@ interface SketchbookViewerProps {
 
 export const SketchbookViewer = ({ onPageChange, onBookReady }: SketchbookViewerProps) => {
   const [imagesLoaded, setImagesLoaded] = useState(false)
-  const [currentPage, setCurrentPage] = useState(0)
+  const [_currentPage, setCurrentPage] = useState(0)
   const bookRef = useRef<any>(null)
 
   // Image numbers: 7-19
