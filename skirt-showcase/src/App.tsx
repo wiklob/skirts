@@ -100,11 +100,16 @@ function App() {
         minHeight: '100vh',
         background: '#000'
       }}>
-        <div className="sticky-banner">
-          <div className="banner-content">
-            <h1 className="banner-title">SKIRT</h1>
-            <img src="/database_gif.gif" alt="Database" className="banner-gif" />
-          </div>
+        <div style={{
+          padding: '1rem'
+        }}>
+          <h1 style={{
+            color: '#fff',
+            fontSize: '1.5rem',
+            fontFamily: 'monospace',
+            margin: 0,
+            textAlign: 'center'
+          }}>SKIRT DATABASE</h1>
         </div>
         <div style={{
           display: 'flex',
