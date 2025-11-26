@@ -6,7 +6,7 @@ interface SketchbookViewerProps {
   onImageClick?: (imagePath: string, breadcrumb: string) => void
 }
 
-export const SketchbookViewer = ({ onImageClick }: SketchbookViewerProps) => {
+export const SketchbookViewer = ({ }: SketchbookViewerProps) => {
   const [imagesLoaded, setImagesLoaded] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const bookRef = useRef<any>(null)
@@ -64,7 +64,7 @@ export const SketchbookViewer = ({ onImageClick }: SketchbookViewerProps) => {
     }
   }
 
-  const handleImageClick = (index: number) => {
+  const handleImageClick = (_index: number) => {
     // Disabled - no zoom popup for sketchbook
     return
   }
