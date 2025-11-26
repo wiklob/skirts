@@ -49,7 +49,7 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
       const imageRanges: Record<string, number[]> = {
         pencil: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
         pleated: [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
-        trapeze: [],
+        trapeze: [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         wrap: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
       }
 

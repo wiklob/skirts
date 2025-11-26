@@ -13,8 +13,8 @@ export const SketchbookViewer = ({ onPageChange, onBookReady }: SketchbookViewer
   const [currentPage, setCurrentPage] = useState(0)
   const bookRef = useRef<any>(null)
 
-  // Image numbers: 3-12
-  const imageNumbers = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  // Image numbers: 7-19
+  const imageNumbers = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
   const imagePaths = imageNumbers.map(n => `/skirt-folders/sketchbook/${n}.jpg`)
   const totalPages = imagePaths.length
 
