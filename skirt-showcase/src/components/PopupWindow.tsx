@@ -259,6 +259,12 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
           <button className="popup-close" onClick={onClose}>
           </button>
           <span className="popup-title">{title}</span>
+          {skirtType === 'sketchbook' && (
+            <div className="sketchbook-titlebar-controls">
+              <button className="sketchbook-nav-btn">‹</button>
+              <button className="sketchbook-nav-btn">›</button>
+            </div>
+          )}
         </div>
 
         {/* Content */}
