@@ -23,6 +23,16 @@ function App() {
   // Load skirt content using the new hook
   const { content, loading } = useSkirtContent(selectedSkirt)
 
+  // Extract image descriptions from content for popup-image-bar
+  const imageDescriptions: Record<number, string> = {}
+  if (content && content.sections) {
+    content.sections.forEach(section => {
+      if (section.imageNumber && section.imageDescription) {
+        imageDescriptions[section.imageNumber] = section.imageDescription
+      }
+    })
+  }
+
   // Stable callbacks for sketchbook
   const handlePageChange = useCallback((page: number, total: number) => {
     setSketchbookPage({ current: page + 1, total })
@@ -198,6 +208,7 @@ function App() {
           title={`/skirt-database/${selectedSkirt}`}
           skirtType={selectedSkirt}
           onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
+          imageDescriptions={imageDescriptions}
           sketchbookControls={selectedSkirt === 'sketchbook' && sketchbookRef ? {
             onNext: () => sketchbookRef.pageFlip().flipNext(),
             onPrev: () => sketchbookRef.pageFlip().flipPrev()

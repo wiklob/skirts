@@ -9,6 +9,7 @@ interface PopupWindowProps {
   children: React.ReactNode
   skirtType?: string
   onImageClick?: (imagePath: string, breadcrumb: string, description?: string) => void
+  imageDescriptions?: Record<number, string>
   sketchbookControls?: {
     onNext: () => void
     onPrev: () => void
@@ -17,7 +18,7 @@ interface PopupWindowProps {
 
 type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw' | null
 
-export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onImageClick, sketchbookControls }: PopupWindowProps) => {
+export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onImageClick, imageDescriptions, sketchbookControls }: PopupWindowProps) => {
   const [size, setSize] = useState({ width: 800, height: 650 })
   const [position, setPosition] = useState({ x: 100, y: 100 })
   const [isDragging, setIsDragging] = useState(false)
@@ -323,7 +324,11 @@ export const PopupWindow = ({ isOpen, onClose, title, children, skirtType, onIma
                     onClick={() => {
                       if (onImageClick) {
                         const breadcrumb = `/skirt-database/${skirtType}/imagerow/${img.split('/').pop()}`
-                        onImageClick(img, breadcrumb)
+                        // Extract image number from filename (e.g., "7.jpg" -> 7)
+                        const imageFileName = img.split('/').pop() || ''
+                        const imageNumber = parseInt(imageFileName.replace(/\.(jpg|gif|png)$/, ''))
+                        const description = imageDescriptions?.[imageNumber]
+                        onImageClick(img, breadcrumb, description)
                       }
                     }}
                   />
