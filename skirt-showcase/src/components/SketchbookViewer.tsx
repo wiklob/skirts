@@ -83,12 +83,12 @@ export const SketchbookViewer = ({ onPageChange, onBookReady }: SketchbookViewer
         <HTMLFlipBook
           ref={bookRef}
           width={550}
-          height={733}
+          height={778}
           size="stretch"
           minWidth={315}
           maxWidth={1000}
-          minHeight={420}
-          maxHeight={1350}
+          minHeight={446}
+          maxHeight={1414}
           drawShadow={true}
           flippingTime={1000}
           usePortrait={true}
