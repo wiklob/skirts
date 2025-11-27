@@ -5,6 +5,7 @@ export interface RTFSkirtContent {
   sections: ContentSection[]
   imageMappings: ImageMapping
   restImages: RestImageMapping[] // Images displayed centrally, not tied to paragraphs
+  archiveSections: ArchiveSection[] // Archive sections with title + images, displayed after rest images
 }
 
 export interface ContentSection {
@@ -24,6 +25,11 @@ export interface RestImageMapping {
   description?: string // Description for the image
 }
 
+export interface ArchiveSection {
+  title: string // The title from first [] (e.g., "SS26")
+  images: RestImageMapping[] // Images in the archive section
+}
+
 export interface ParagraphImageMapping {
   image: number | string // Image reference (number for JPG, string for GIF)
   description?: string // Optional description
@@ -32,6 +38,8 @@ export interface ParagraphImageMapping {
 export interface ImageMapping {
   paragraphToImage: Map<number, ParagraphImageMapping> // p1 -> {image: 9, description: "..."}
   restImages: RestImageMapping[] // Images for r-i23-gif2;i24-gif3
+  unusedImageDescriptions: Map<number | string, string> // u-i8-[desc] -> descriptions for imagerow
+  archiveSections: ArchiveSection[] // a-[title]-images... -> archive sections after rest images
 }
 
 export interface TextFormatting {

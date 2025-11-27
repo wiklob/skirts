@@ -5,18 +5,23 @@ interface RestImagesProps {
   imageNumbers: RestImageMapping[]
   skirtType: string
   onImageClick: (imagePath: string, breadcrumb: string, description?: string) => void
+  title?: string // Optional title displayed as large header (for archive sections)
 }
 
 /**
  * Displays "rest" images centrally in the content area
  * These are images marked with "r-" in the mapping file
  * Supports click targets: display one image but open a different one on click
+ * Also used for archive sections with an optional title
  */
-export const RestImages = ({ imageNumbers, skirtType, onImageClick }: RestImagesProps) => {
+export const RestImages = ({ imageNumbers, skirtType, onImageClick, title }: RestImagesProps) => {
   if (imageNumbers.length === 0) return null
 
   return (
     <div className="rest-images-container">
+      {title && (
+        <h1 className="rest-images-title">{title}</h1>
+      )}
       <div className="rest-images-grid">
         {imageNumbers.map((mapping) => {
           // Path to display

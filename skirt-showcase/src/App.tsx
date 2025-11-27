@@ -6,6 +6,7 @@ import { RichTextSection } from './components/RichTextSection'
 import { RestImages } from './components/RestImages'
 import { ImageZoomPopup } from './components/ImageZoomPopup'
 import { SketchbookViewer } from './components/SketchbookViewer'
+import { MobileScreen } from './components/MobileScreen'
 import { useSkirtContent } from './hooks/useSkirtContent'
 import './App.css'
 
@@ -24,13 +25,21 @@ function App() {
   const { content, loading } = useSkirtContent(selectedSkirt)
 
   // Extract image descriptions from content for popup-image-bar
-  const imageDescriptions: Record<number, string> = {}
-  if (content && content.source === 'rtf' && content.sections) {
+  // Combines: paragraph image descriptions + unused image descriptions
+  const imageDescriptions: Record<number | string, string> = {}
+  if (content && content.source === 'rtf') {
+    // Add descriptions from paragraph mappings (sections)
     content.sections.forEach(section => {
       if (section.imageNumber && section.imageDescription) {
         imageDescriptions[section.imageNumber] = section.imageDescription
       }
     })
+    // Add descriptions from unused images (u- line)
+    if (content.imageMappings.unusedImageDescriptions) {
+      content.imageMappings.unusedImageDescriptions.forEach((description, imageRef) => {
+        imageDescriptions[imageRef] = description
+      })
+    }
   }
 
   // Stable callbacks for sketchbook
@@ -93,45 +102,7 @@ function App() {
 
   // Show mobile message
   if (isMobile) {
-    return (
-      <div className="app" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        background: '#000'
-      }}>
-        <div style={{
-          padding: '1rem'
-        }}>
-          <h1 style={{
-            color: '#fff',
-            fontSize: '1.5rem',
-            fontFamily: 'monospace',
-            margin: 0,
-            textAlign: 'center'
-          }}>SKIRT DATABASE</h1>
-        </div>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-          padding: '2rem'
-        }}>
-          <div style={{
-            color: '#fff',
-            fontSize: 'clamp(1.2rem, 4vw, 2rem)',
-            textAlign: 'center',
-            fontFamily: 'monospace',
-            letterSpacing: '0.05em',
-            lineHeight: '1.6',
-            maxWidth: '600px'
-          }}>
-            this project is greater than mobile; use desktop browser instead
-          </div>
-        </div>
-      </div>
-    )
+    return <MobileScreen />
   }
 
   return (
@@ -214,6 +185,21 @@ function App() {
               </ul>
             </div>
           </div>
+
+          <footer className="site-disclaimer">
+            <div className="disclaimer-content">
+              <p>
+                This website is a non-commercial educational project created by students for academic purposes only.
+                Images featured on this site are sourced from fashion archives, designer collections, historical references,
+                and editorial publications, and are used solely for illustrative and educational purposes.
+                All rights to these images belong to their respective creators and copyright holders.
+              </p>
+              <p>
+                No copyright infringement is intended. If you are a rights holder and would like content to be removed,
+                please contact us and we will promptly comply with your request.
+              </p>
+            </div>
+          </footer>
         </section>
       </div>
 
@@ -301,6 +287,16 @@ function App() {
                     onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
                   />
                 )}
+                {/* Render archive sections (a- lines) with title + images */}
+                {content.archiveSections && content.archiveSections.map((archive, index) => (
+                  <RestImages
+                    key={`archive-${index}`}
+                    imageNumbers={archive.images}
+                    skirtType={selectedSkirt}
+                    onImageClick={(path, breadcrumb, description) => setZoomedImage({ path, breadcrumb, description })}
+                    title={archive.title}
+                  />
+                ))}
               </>
             )}
 

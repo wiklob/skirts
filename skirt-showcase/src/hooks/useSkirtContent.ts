@@ -67,7 +67,8 @@ export function useSkirtContent(skirtType: SkirtType | null): UseSkirtContentRes
               source: 'rtf',
               sections: sectionsWithImages,
               imageMappings: imageMapping,
-              restImages: imageMapping.restImages
+              restImages: imageMapping.restImages,
+              archiveSections: imageMapping.archiveSections
             })
             setLoading(false)
             return
