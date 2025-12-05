@@ -100,10 +100,10 @@ function App() {
     return () => window.removeEventListener('resize', checkWidth)
   }, [])
 
-  // Show mobile message
-  if (isMobile) {
-    return <MobileScreen />
-  }
+  // Show mobile message - TEMPORARILY DISABLED
+  // if (isMobile) {
+  //   return <MobileScreen />
+  // }
 
   return (
     <div className="app">
