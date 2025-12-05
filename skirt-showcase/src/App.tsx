@@ -6,7 +6,7 @@ import { RichTextSection } from './components/RichTextSection'
 import { RestImages } from './components/RestImages'
 import { ImageZoomPopup } from './components/ImageZoomPopup'
 import { SketchbookViewer } from './components/SketchbookViewer'
-import { MobileScreen } from './components/MobileScreen'
+// import { MobileScreen } from './components/MobileScreen' // TEMPORARILY DISABLED
 import { useSkirtContent } from './hooks/useSkirtContent'
 import './App.css'
 
@@ -17,7 +17,7 @@ function App() {
   const [selectedSkirt, setSelectedSkirt] = useState<SkirtType>(null)
   const [zoomedImage, setZoomedImage] = useState<{ path: string; breadcrumb: string; description?: string } | null>(null)
   const [isNarrow, setIsNarrow] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [_isMobile, _setIsMobile] = useState(false) // TEMPORARILY DISABLED
   const [_sketchbookPage, setSketchbookPage] = useState({ current: 1, total: 10 })
   const [sketchbookRef, setSketchbookRef] = useState<any>(null)
 
@@ -57,7 +57,7 @@ function App() {
       const userAgent = navigator.userAgent || navigator.vendor
       const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
       const isSmallScreen = window.innerWidth <= 768
-      setIsMobile(isMobileDevice || isSmallScreen)
+      _setIsMobile(isMobileDevice || isSmallScreen)
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
